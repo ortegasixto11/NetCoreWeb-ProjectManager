@@ -1,0 +1,60 @@
+﻿@model IEnumerable<ProjectManager.Web.Models.ApplicationUser>
+@{
+    ViewData["Title"] = "Manage Users";
+}
+
+<h1>Manage Users</h1>
+<br />
+
+<h4>Add User</h4>
+<div class="row">
+    <div class="col-6">
+        <form class="form-inline" asp-action="AddUser" method="post">
+            <input type="hidden" name="ProjectId" value="@ViewBag.ProjectId" />
+            <div class="form-group">
+                <label class="control-label mr-3">User</label>
+                <select class="form-control mr-3" name="UserId" asp-items="ViewBag.Users"><option></option></select>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+        </form>
+    </div>
+</div>
+<hr class="d-none" />
+<hr />
+
+<br />
+<a asp-action="Index">Back to List Projects</a>
+<br />
+<h4>Users in the Project => @ViewBag.ProjectName</h4>
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th> @Html.DisplayNameFor(model => model.FirstOrDefault().DNI) </th>
+            <th> @Html.DisplayNameFor(model => model.FirstOrDefault().FirstName) </th>
+            <th> @Html.DisplayNameFor(model => model.FirstOrDefault().LastName) </th>
+            <th> @Html.DisplayNameFor(model => model.FirstOrDefault().Email) </th>
+            <th> @Html.DisplayNameFor(model => model.FirstOrDefault().Role) </th>
+            <th> @Html.DisplayNameFor(model => model.FirstOrDefault().IsActive) </th>
+            <th> Actions </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td> @Html.DisplayFor(modelItem => item.DNI) </td>
+                <td> @Html.DisplayFor(modelItem => item.FirstName) </td>
+                <td> @Html.DisplayFor(modelItem => item.LastName) </td>
+                <td> @Html.DisplayFor(modelItem => item.Email) </td>
+                <td> @Html.DisplayFor(modelItem => item.Role) </td>
+                <td> @Html.DisplayFor(modelItem => item.IsActive) </td>
+                <td>
+                    <a asp-action="RemoveUser" asp-route-projectId="@ViewBag.ProjectId" asp-route-userId="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

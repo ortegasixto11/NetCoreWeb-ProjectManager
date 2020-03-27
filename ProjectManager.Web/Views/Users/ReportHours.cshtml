@@ -1,0 +1,29 @@
+﻿@model ProjectManager.Web.ViewModels.UserReportHoursViewModel
+@{
+    ViewData["Title"] = "Report Hours";
+    string userId = ViewBag.UserId as string;
+}
+
+<h1>Report Hours</h1>
+<h4>Project => @ViewBag.ProjectName</h4>
+<br />
+<a asp-action="Projects" asp-route-userId="@userId">Back to List Projects</a>
+<br />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ReportHours" asp-controller="Users" method="post">
+            <input type="hidden" asp-for="ProjectId" value="@ViewBag.ProjectId" />
+            <input type="hidden" asp-for="UserId" value="@ViewBag.UserId" />
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ReportedHours" class="control-label"></label>
+                <input asp-for="ReportedHours" class="form-control" />
+                <span asp-validation-for="ReportedHours" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Report</button>
+            </div>
+        </form>
+    </div>
+</div>

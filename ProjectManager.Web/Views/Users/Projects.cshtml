@@ -1,0 +1,32 @@
+﻿@model IEnumerable<ProjectManager.Web.Models.Project>
+
+@{
+    ViewData["Title"] = "Projects";
+    string userId = ViewBag.UserId as string;
+}
+
+<h1>Projects</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th> @Html.DisplayNameFor(model => model.Code) </th>
+            <th> @Html.DisplayNameFor(model => model.Name) </th>
+            <th> Hours </th>
+            <th> Actions </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td> @Html.DisplayFor(modelItem => item.Code) </td>
+                <td> @Html.DisplayFor(modelItem => item.Name) </td>
+                <td> @item.ProjectWorkflows.Where(x => x.UserId == userId).Select(x => x.ReportedHours).Sum() </td>
+                <td>
+                    <a asp-action="ReportHours" asp-route-projectId="@item.Id" asp-route-userId="@userId">Report Hours</a> |
+                    <a asp-action="ProjectDetails" asp-route-projectId="@item.Id" asp-route-userId="@userId">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
